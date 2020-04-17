@@ -30,7 +30,7 @@ route::add('/s', function() {
   else {
     $obj->get();
   }
-}, ['get','post']);
+}, ['post','get']);
 
 route::pathNotFound(function($path) {
   header('HTTP/1.1 404 Not Found', TRUE, 404);
