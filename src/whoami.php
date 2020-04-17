@@ -2,7 +2,7 @@
 namespace sailboats;
 use \PDO;
 
-$db_config = parse_ini_file('../conf/db.conf');
+$db_config  = parse_ini_file('../conf/db.conf');
 $servername = $db_config["servername"];
 $dbname     = $db_config["dbname"];
 $username   = $db_config["username"];
@@ -36,10 +36,10 @@ class whoami {
         $s->execute();
         $r = $s->fetch();
         foreach ($r as $result) {
-	        $a[] = [
+	        $a[0] = [
 	            "id"        	=> sha1($_SERVER['REMOTE_ADDR']),
 	            "user_agent"    => $_SERVER['HTTP_USER_AGENT'],
-	            "totalPosts"   	=> $r[0],
+	            "totalPosts"   	=> $r['COUNT(sha_id)'],
 	        ];
     	}
         return $a;
