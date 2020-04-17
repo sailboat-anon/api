@@ -1,0 +1,8 @@
+; cyberland db config file
+
+[mysql/mariadb]
+servername = "127.0.0.1";
+username   = "root";
+password   = "helmsalee";
+dbname     = "cyberland";
+port	   = "3306";
