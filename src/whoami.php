@@ -15,11 +15,7 @@ class whoami {
 	}
 
 	function save($board, $thread=null) {
-	   	global $servername;
-    	global $dbname;
-    	global $username;
-    	global $password;
-    	global $port;
+	   	global $servername, $dbname, $username, $password, $port;
 
         $conn = new PDO("mysql:host={$servername};port={$port};dbname={$dbname}", $username, $password);
         $sql = "INSERT INTO users (sha_id, user_agent, board, thread) VALUES (?,?,?,?)";

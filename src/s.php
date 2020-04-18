@@ -9,41 +9,58 @@ $username   = $db_config["username"];
 $password   = $db_config["password"];
 $port       = $db_config["port"];
 
+$BOARD_LIMIT = 50;
+
 class sharedBoard {
 	function get($thread=null, $limit=null) {
-   	    global $servername;
-    	global $dbname;
-    	global $username;
-    	global $password;
-    	global $port;
+   	    global $servername, $dbname, $username, $password, $port;
+        global $BOARD_LIMIT;
 
-    	if (intval($_GET["num"]) > 100) { $num = 100; }
-    	else { $num = intval($_GET["num"] ?? 100); }
+    	$limit = intval($limit ?? $BOARD_LIMIT);
+    	if (intval($limit > $BOARD_LIMIT)) { $limit = $BOARD_LIMIT; }
 
 	    $conn = new PDO("mysql:host={$servername};port={$port};dbname={$dbname}", $username, $password);
-        $sql = "SELECT * FROM s WHERE replyTo=? OR id=? LIMIT ?";
+        $sql = "SELECT id, content, replyTo, bumpCount, time FROM s WHERE replyTo=? OR id=? LIMIT ?";
         $s = $conn->prepare($sql);
         $s->bindParam(1, intval($_GET["thread"] ?? 0),	PDO::PARAM_INT);
         $s->bindParam(2, intval($_GET["thread"] ?? 0),	PDO::PARAM_INT);
-        $s->bindParam(3, intval($_GET["num"] ?? 50),	PDO::PARAM_INT);
+        $s->bindParam(3, intval($limit ?? $BOARD_LIMIT),PDO::PARAM_INT);
         $s->execute();
         $r = $s->fetchAll();
         $a = [];
-        foreach ($r as $result) {
-	        $a[] = [
-	            "id"        	=> sha1($_SERVER['REMOTE_ADDR']),
-	            "user_agent"    => $_SERVER['HTTP_USER_AGENT'],
-	            "totalPosts"   	=> $r['COUNT(sha_id)'],
-	        ];
+	    foreach ($r as $result) {
+        	$a[] = [
+	            "id"        => $result["id"],
+	            "content"   => $result["content"],
+	            "replyTo"   => $result["replyTo"],
+	            "bumpCount" => $result["bumpCount"],
+	            "time"      => $result["time"],
+	    	    ];
     	}
-        return json_encode($a);
+        echo(json_encode($a));
 	}
 
-	function post($board, $thread=null) {
-	   	global $servername;
-    	global $dbname;
-    	global $username;
-    	global $password;
-    	global $port;
-	}
+	function post($thread, $content) {
+	   global $servername, $dbname, $username, $password, $port;
+
+    	$bumpCount = 0;
+    	$thread = intval($thread ?? 0);
+        // need to query the last index id to see if the 'replyTo' value is legit (don't want to reply to future posts)
+	    $conn = new PDO("mysql:host={$servername};port={$port};dbname={$dbname}", $username, $password);
+	    $sql = "INSERT INTO s (content, replyTo) VALUES (?,?)";
+        echo "here";
+	    $s = $conn->prepare($sql);
+	    $s->bindParam(1, $content,     PDO::PARAM_STR);
+	    $s->bindParam(2, $thread,      PDO::PARAM_INT);
+	    $s->execute();
+	    $s->fetch();
+
+        // if the reply wasn't to a board itself, bump the associated reply
+        if ($thread != 0) {
+            $s = $conn->prepare("UPDATE s SET bumpCount = bumpCount + 1 WHERE id = ?");
+            $s->bindParam(1, $thread,  PDO::PARAM_INT);
+            $s->execute();
+            $s->fetch();
+        }
+    }
 }
