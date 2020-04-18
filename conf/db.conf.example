@@ -1,8 +1,8 @@
-; cyberland db config file
+; cyberapi db config file
 
 [mysql/mariadb]
 servername = "127.0.0.1";
-username   = "root";
+username   = "sailboatanon";
 password   = "helmsalee";
-dbname     = "cyberland";
+dbname     = "cyberlapo;
 port	   = "3306";
