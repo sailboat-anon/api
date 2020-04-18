@@ -3,14 +3,17 @@ include __DIR__ . '/../src/route.php';
 include __DIR__ . '/../src/whoami.php';
 include __DIR__ . '/../src/s.php';
 include __DIR__ . '/../src/boards.php';
+include __DIR__ . '/../src/frontend_index.php';
 
 use sailboats\route; // https://github.com/steampixel/simplePHPRouter
 use sailboats\whoami;
 use sailboats\sharedBoard;
 use sailboats\boards; // https://github.com/cyberland-digital/cyberland-protocol/blob/master/protocol.md
+use sailboats\frontend;
 
 route::add('/', function() {
-  echo 'index but who am i?';
+  $obj = new frontend();
+  $obj->get();
 });
 
 route::add('/boards', function() {
