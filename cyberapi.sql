@@ -1,4 +1,4 @@
-utf8mb4_0900_ai_ci-- MySQL dump 10.13  Distrib 8.0.16, for macos10.14 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.16, for macos10.14 (x86_64)
 --
 -- Host: localhost    Database: cyberland
 -- ------------------------------------------------------
