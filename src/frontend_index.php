@@ -3,7 +3,7 @@ namespace sailboats;
 
 class frontend {
   function get() {
-      echo "                                                                                                                                                                             
+      echo "<pre>                                                                                                                                                                             
                                            __                  ___                        __     ___            ___           __        
                       __                  /\ \                /\_ \                      /\ \  /'___`\         /\_ \         /\ \       
          __    _____ /\_\       ___  __  _\ \ \____    __  _ _\//\ \      __      ___    \_\ \/\_\ /\ \      __\//\ \   __  _\ \ \____  
@@ -16,6 +16,7 @@ class frontend {
 
 
       this is the /api/ microservice for api.cyberland2.club!  in /development/ !
-      https://github.com/sailboat-anon/api";
+      https://github.com/sailboat-anon/api
+      </pre>";
     }
 }
