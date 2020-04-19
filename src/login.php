@@ -10,6 +10,7 @@ $dbusername   = $db_config["username"];
 $dbpassword   = $db_config["password"];
 $dbport       = $db_config["port"];
 $secretKey    = $db_config["secretKey"];
+$algorithm    = $db_config["jwt_algo"];
 
 use Firebase\JWT\JWT;
 use PDO;
@@ -48,12 +49,11 @@ class login_obj {
                          */
                         //if (password_verify($password, $rs['password'])) {
                         if (true) {
-
                             $tokenId    = base64_encode(openssl_random_pseudo_bytes(32));
                             $issuedAt   = time();
                             $notBefore  = $issuedAt + 10;  //Adding 10 seconds
                             $expire     = $notBefore + 60; // Adding 60 seconds
-                            $serverName = 'sailboat.local';
+                            $serverName = $_SERVER['SERVER_ADDR'];
                             
                             /*
                              * Create the token as an array
@@ -69,14 +69,7 @@ class login_obj {
                                     'userName' => $username, // User name
                                 ]
                             ];
-                            
-                            header('Content-type: application/json');
-                            
-                            /*
-                             * Extract the algorithm from the config file too
-                             */
-                            //$algorithm = $config->get('jwt')->get('algorithm');
-                            $algorithm = 'HS512'; // Algorithm used to sign the token, see https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40#section-3
+
                             /*
                              * Encode the array to a JWT string.
                              * Second parameter is the key to encode the token.
@@ -84,6 +77,7 @@ class login_obj {
                              * The output string can be validated at http://jwt.io/
                              */
                             global $secretKey;
+                            global $algorithm;
                             $jwt = JWT::encode(
                                 $data,      //Data to be encoded in the JWT
                                 $secretKey, // The signing key
@@ -91,21 +85,22 @@ class login_obj {
                                 );
                                 
                             $unencodedArray = ['jwt' => $jwt];
+                            header('Content-type: application/json');
                             echo json_encode($unencodedArray);
                         } else {
-                            header('HTTP/1.0 401 Unauthorized');
+                            header('HTTP/1.1 401 Unauthorized', TRUE, 401);
                         }
                     } else {
-                        header('HTTP/1.0 404 Not Found');
+                        header('HTTP/1.1 404 Not Found' TRUE, 404);
                     }
                 } catch (Exception $e) {
-                    header('HTTP/1.0 500 Internal Server Error');
+                    header('HTTP/1.1 500 Internal Server Error' TRUE, 500);
                 }
             } else {
-                header('HTTP/1.0 400 Bad Request');
+                header('HTTP/1.1 400 Bad Request' TRUE, 400);
             }
         } else {
-            header('HTTP/1.0 405 Method Not Allowed');
+            header('HTTP/1.1 405 Method Not Allowed' TRUE, 405);
         }
     }
 }
