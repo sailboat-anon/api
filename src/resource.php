@@ -23,24 +23,22 @@ class secretResource {
         $token = substr($_SERVER['HTTP_AUTHORIZATION'], 7);  // regex was a bastard so i gave up; sscanf($_SERVER['HTTP_AUTHORIZATION'], 'Authorization: Bearer %s'); might work
         $token_segments = explode('.', $token);
         if (count($token_segments) != 3) {
-            header('HTTP/1.1 406 Not Acceptable (Incorrect Number of JWT Segments)', TRUE, 406);
+            header('HTTP/1.1 401 Unauthorized', TRUE, 401);
             exit;
         }
         return $token;
     }
 
-    function validateToken($token): bool {
+    function validateToken(): bool {
+        $token = $this->getToken();
         try {
             global $secretKey, $jwt_algo;
             $token = JWT::decode($token, $secretKey, array($jwt_algo));
-            header('Content-type: application/json');
-            echo "Token valid.\n";
             return true;
         } 
         catch (\Exception $e) {
+            header('HTTP/1.1 401 Unauthorized', TRUE, 401);
             echo($e->getMessage());
-            echo "Token invalid.\n";
-            header('HTTP/1.1 401 Unauthorized $e', TRUE, 401);
             return false; // will this even run?  not sure about the exception handling
         }
     }
