@@ -9,6 +9,7 @@ $dbname       = $db_config["dbname"];
 $dbusername   = $db_config["username"];
 $dbpassword   = $db_config["password"];
 $dbport       = $db_config["port"];
+$secretKey    = $db_config["secretKey"];
 
 use Firebase\JWT\JWT;
 use PDO;
@@ -72,19 +73,6 @@ class login_obj {
                             header('Content-type: application/json');
                             
                             /*
-                             * Extract the key, which is coming from the config file. 
-                             * 
-                             * Best suggestion is the key to be a binary string and 
-                             * store it in encoded in a config file. 
-                             *
-                             * Can be generated with base64_encode(openssl_random_pseudo_bytes(64));
-                             *
-                             * keep it secure! You'll need the exact key to verify the 
-                             * token later.
-                             */
-                            //$secretKey = base64_decode($config->get('jwt')->get('key'));
-                            $secretKey = 'sailboatsfloat';
-                            /*
                              * Extract the algorithm from the config file too
                              */
                             //$algorithm = $config->get('jwt')->get('algorithm');
@@ -95,6 +83,7 @@ class login_obj {
                              * 
                              * The output string can be validated at http://jwt.io/
                              */
+                            global $secretKey;
                             $jwt = JWT::encode(
                                 $data,      //Data to be encoded in the JWT
                                 $secretKey, // The signing key

@@ -8,10 +8,10 @@ include __DIR__ . '/../src/login.php';
 
 use sailboats\route; // https://github.com/steampixel/simplePHPRouter
 use sailboats\whoami;
-use sailboats\sharedBoard;
+use sailboats\sharedBoard; // https://github.com/sailboat-anon/sailboatland
 use sailboats\boards; // https://github.com/cyberland-digital/cyberland-protocol/blob/master/protocol.md
 use sailboats\frontend;
-use sailboats\login_obj;
+use sailboats\login_obj; // https://github.com/firebase/php-jwt
 
 route::add('/', function() {
   $obj = new frontend();
