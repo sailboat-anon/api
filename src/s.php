@@ -48,7 +48,7 @@ class sharedBoard {
         // need to query the last index id to see if the 'replyTo' value is legit (don't want to reply to future posts)
 	    $conn = new PDO("mysql:host={$servername};port={$port};dbname={$dbname}", $username, $password);
 	    $sql = "INSERT INTO s (content, replyTo) VALUES (?,?)";
-        echo "here";
+
 	    $s = $conn->prepare($sql);
 	    $s->bindParam(1, $content,     PDO::PARAM_STR);
 	    $s->bindParam(2, $thread,      PDO::PARAM_INT);
