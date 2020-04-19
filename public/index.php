@@ -4,15 +4,22 @@ include __DIR__ . '/../src/whoami.php';
 include __DIR__ . '/../src/s.php';
 include __DIR__ . '/../src/boards.php';
 include __DIR__ . '/../src/frontend_index.php';
+include __DIR__ . '/../src/login.php';
 
 use sailboats\route; // https://github.com/steampixel/simplePHPRouter
 use sailboats\whoami;
 use sailboats\sharedBoard;
 use sailboats\boards; // https://github.com/cyberland-digital/cyberland-protocol/blob/master/protocol.md
 use sailboats\frontend;
+use sailboats\login_obj;
 
 route::add('/', function() {
   $obj = new frontend();
+  $obj->get();
+});
+
+route::add('/login', function() {
+  $obj = new login_obj();
   $obj->get();
 });
 
