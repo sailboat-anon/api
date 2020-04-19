@@ -33,7 +33,6 @@ class login_obj {
                     try {
                         $sb->execute();
                         $rs = $sb->fetch();
-
                     }
                     catch (PDOException $err) {
                         echo($err->getMessage());
@@ -52,7 +51,7 @@ class login_obj {
                             $tokenId    = base64_encode(openssl_random_pseudo_bytes(32));
                             $issuedAt   = time();
                             $notBefore  = $issuedAt + 10;  //Adding 10 seconds
-                            $expire     = $notBefore + 60; // Adding 60 seconds
+                            $expire     = $notBefore + 360000; // Adding 60 seconds
                             $serverName = $_SERVER['SERVER_ADDR'];
                             
                             /*
@@ -91,16 +90,16 @@ class login_obj {
                             header('HTTP/1.1 401 Unauthorized', TRUE, 401);
                         }
                     } else {
-                        header('HTTP/1.1 404 Not Found' TRUE, 404);
+                        header('HTTP/1.1 404 Not Found', TRUE, 404);
                     }
                 } catch (Exception $e) {
-                    header('HTTP/1.1 500 Internal Server Error' TRUE, 500);
+                    header('HTTP/1.1 500 Internal Server Error $e', TRUE, 500);
                 }
             } else {
-                header('HTTP/1.1 400 Bad Request' TRUE, 400);
+                header('HTTP/1.1 400 Bad Request', TRUE, 400);
             }
         } else {
-            header('HTTP/1.1 405 Method Not Allowed' TRUE, 405);
+            header('HTTP/1.1 405 Method Not Allowed', TRUE, 405);
         }
     }
 }
