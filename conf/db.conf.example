@@ -4,5 +4,9 @@
 servername = "127.0.0.1";
 username   = "sailboatanon";
 password   = "helmsalee";
-dbname     = "cyberlapo;
+dbname     = "api;
 port	   = "3306";
+
+[secret stuff]
+secretKey = "1686c6f0ac4e5a7404798ce6fdb24087";
+jwt_algo = "HS384"; https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40#section-3
