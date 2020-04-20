@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../src/ratelimit.php';
 include __DIR__ . '/../src/route.php';
 include __DIR__ . '/../src/whoami.php';
 include __DIR__ . '/../src/s.php';
@@ -14,6 +15,9 @@ use sailboats\boards; // https://github.com/cyberland-digital/cyberland-protocol
 use sailboats\frontend;
 use sailboats\login_obj; // https://github.com/firebase/php-jwt
 use sailboats\treasure;
+  
+$rl = new ratelimit();
+$st = $rl->getSleepTime($_SERVER["REMOTE_ADDR"]);
 
 route::add('/', function() {
   $obj = new frontend();
@@ -46,6 +50,8 @@ route::add('/s', function() {
 });
 
 route::add('/s', function() {
+  global $st;
+  if ($st > 0) { header("HTTP/1.1 429 Too Many Requests", TRUE, 429);  exit; }
   $obj = new sharedBoard();
   $obj->post($_POST['replyTo'], $_POST['content']);
 }, 'post');
