@@ -122,7 +122,7 @@ sailb@ ~/$ curl api.cyberland2.club/api/v1/treasure -H 'Authorization: Bearer ey
 < 
 ```
 ```
-you found the treasure!  you've successfully passed-back the JWT and you're accessing a protected endpoint.  fair winds!
+fair winds!  you've successfully passed-back the JWT and you're accessing a protected endpoint. 
 
 				                  .
 				                .'|     .8
