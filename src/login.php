@@ -16,11 +16,8 @@ use Firebase\JWT\JWT;
 use PDO;
 
 class login_obj {
-    function get() {
-        if (true) { // put logic here at some point
-            $username = 'sba';
-            $password = 'cyberland';           
-
+    function get($username=null, $password=null): void {
+        if (isset($username) && isset($password)) {   
             if (true) { // if user and pass are filtered/sanitized
                 try {
                     global $dbservername, $dbname, $dbusername, $dbpassword, $pdbort;
@@ -47,7 +44,7 @@ class login_obj {
                          * @see http://php.net/manual/en/ref.password.php
                          */
                         //if (password_verify($password, $rs['password'])) {
-                        if (true) {
+                        if ($rs['password'] == sha1($password)) {
                             $tokenId    = base64_encode(openssl_random_pseudo_bytes(32));
                             $issuedAt   = time();
                             $notBefore  = $issuedAt + 10;  // seconds
@@ -93,13 +90,13 @@ class login_obj {
                         header('HTTP/1.1 404 Not Found', TRUE, 404);
                     }
                 } catch (Exception $e) {
-                    header('HTTP/1.1 500 Internal Server Error $e', TRUE, 500);
+                    header('HTTP/1.1 500 Internal Server Error: $e', TRUE, 500);
                 }
             } else {
                 header('HTTP/1.1 400 Bad Request', TRUE, 400);
             }
         } else {
-            header('HTTP/1.1 405 Method Not Allowed', TRUE, 405);
+            header('HTTP/1.1 406 Not Acceptable', TRUE, 406);
         }
     }
 }

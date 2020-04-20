@@ -27,8 +27,8 @@ route::add('/api/v1/treasure', function () {
 
 route::add('/api/v1/auth', function() {
   $obj = new login_obj();
-  $obj->get();
-});
+  $obj->get($_POST['username'], $_POST['password']);
+}, 'post');
 
 route::add('/boards', function() {
   $obj = new boards();
