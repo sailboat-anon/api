@@ -1,7 +1,7 @@
 *** TUTORIAL
-URL (HTTPS-only)
-api.cyberland2.club:443
+api.cyberland2.club
 
 *** WHO ARE YOU ANON, and what's the name of your custom client?
-https://api.cyberland2.club/whoami/
+https://api.cyberland2.club/api/v1/whoami/
 
+https://github.com/sailboat-anon/api
