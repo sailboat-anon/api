@@ -41,6 +41,8 @@ this is the /api/ microservice for api.cyberland2.club!  in /dev/
 # Accessing Secure Endpoints With JSON Web Tokens (JWT)
   > https://tools.ietf.org/html/rfc7519
   
+> Our goal in this exercise is to restrict certain endpoints only to trusted tenants (cyberland servers).  You will attempt to comsume the api.cyberland2.club/treasure/ endpoint.  It's currently secure and will require you to (1) authenticate yourself, (2) accept your temporary authorization token and (3) consume the treasure hidden in /treasure/.
+  
 ### Attempt (and fail) to access secure endpoint
 ```
 sailb@ ~/$ curl api.cyberland2.club/api/v1/treasure/ -v
