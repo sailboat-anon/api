@@ -1,5 +1,8 @@
 <?php
 namespace sailboats;
+include __DIR__ . '/../src/naughty.php'; // bad word filter
+
+use sailboats\sanitizeText; // https://github.com/steampixel/simplePHPRouter
 use \PDO;
 
 $db_config  = parse_ini_file('../conf/db.conf');
@@ -13,6 +16,7 @@ $BOARD_LIMIT = 50;
 
 class sharedBoard {
 	function get($thread=null, $limit=null) {
+        $sanitize = new sanitizeText();
    	    global $servername, $dbname, $username, $password, $port;
         global $BOARD_LIMIT;
 
@@ -31,7 +35,7 @@ class sharedBoard {
 	    foreach ($r as $result) {
         	$a[] = [
 	            "id"        => $result["id"],
-	            "content"   => $result["content"],
+	            "content"   => $sanitize->profanity($result["content"]),
 	            "replyTo"   => $result["replyTo"],
 	            "bumpCount" => $result["bumpCount"],
 	            "time"      => $result["time"],

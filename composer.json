@@ -1,9 +1,7 @@
 {
     "require": {
         "firebase/php-jwt": "^5.2",
-        "predis/predis": "^1.1"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^9"
+        "predis/predis": "^1.1",
+        "snipe/banbuilder": "dev-master"
     }
 }
