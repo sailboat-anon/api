@@ -2,7 +2,7 @@
 namespace sailboats;
 include __DIR__ . '/../src/naughty.php'; // bad word filter
 
-use sailboats\sanitizeText; // https://github.com/steampixel/simplePHPRouter
+use sailboats\sanitizeText;
 use \PDO;
 
 $db_config  = parse_ini_file('../conf/db.conf');
