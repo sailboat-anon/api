@@ -26,8 +26,8 @@ class sharedBoard {
 	    $conn = new PDO("mysql:host={$servername};port={$port};dbname={$dbname}", $username, $password);
         $sql = "SELECT id, content, replyTo, bumpCount, time FROM s WHERE replyTo=? OR id=? LIMIT ?";
         $s = $conn->prepare($sql);
-        $s->bindParam(1, intval($_GET["thread"] ?? 0),	PDO::PARAM_INT);
-        $s->bindParam(2, intval($_GET["thread"] ?? 0),	PDO::PARAM_INT);
+        $s->bindParam(1, intval($_GET["replyTo"] ?? 0),	PDO::PARAM_INT);
+        $s->bindParam(2, intval($_GET["replyTo"] ?? 0),	PDO::PARAM_INT);
         $s->bindParam(3, intval($limit ?? $BOARD_LIMIT),PDO::PARAM_INT);
         $s->execute();
         $r = $s->fetchAll();
