@@ -47,7 +47,7 @@ route::add('/api/v1/whoami', function() {
 
 route::add('/s', function() {
   $sb = new sharedBoard();
-  $sb->get($_GET['replyTo'], $_GET['num']);
+  $sb->get();
 });
 
 route::add('/s', function() {

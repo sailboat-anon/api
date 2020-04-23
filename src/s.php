@@ -15,12 +15,11 @@ $port       = $db_config["port"];
 $BOARD_LIMIT = 50;
 
 class sharedBoard {
-	function get($thread=null, $limit=null) {
+	function get() {
         $sanitize = new sanitizeText();
    	    global $servername, $dbname, $username, $password, $port;
         global $BOARD_LIMIT;
-
-    	$limit = intval($limit ?? $BOARD_LIMIT);
+    	$limit = intval($_GET['num'] ?? $BOARD_LIMIT);
     	if (intval($limit > $BOARD_LIMIT)) { $limit = $BOARD_LIMIT; }
 
 	    $conn = new PDO("mysql:host={$servername};port={$port};dbname={$dbname}", $username, $password);
