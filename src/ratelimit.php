@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__.'/../vendor/autoload.php';
-use Predis\Autoloader::register();
+Predis\Autoloader::register();
 
 class ratelimit {
     private $redis;
@@ -9,7 +9,7 @@ class ratelimit {
     public function __construct() {
         $this->redis = new Predis\Client([
             'scheme' => 'tcp',
-            'host'   => 'localhost',
+            'host'   => '127.0.0.1',
             'port'   => 6379
         ]);
     }
