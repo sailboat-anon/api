@@ -2,7 +2,7 @@
 namespace sailboats;
 include __DIR__ . '/../src/naughty.php'; // bad word filter
 require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/resource.php';
+// require __DIR__ . '/resource.php';
 
 use sailboats\secretResource;
 use sailboats\sanitizeText;
