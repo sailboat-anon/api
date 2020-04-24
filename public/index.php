@@ -53,8 +53,8 @@ route::add('/s', function() {
 route::add('/s', function() {
   global $st;
   if ($st > 0) { header("HTTP/1.1 429 Too Many Requests", TRUE, 429);  exit; }
-  $obj = new sharedBoard();
-  $obj->post();
+  $sb = new sharedBoard();
+  $sb->post();
 }, 'post');
 
 route::pathNotFound(function() {
