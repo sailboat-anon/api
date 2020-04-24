@@ -50,11 +50,14 @@ class sharedBoard {
         else { header('HTTP/1.1 401 Unauthorized', TRUE, 401); }
 	}
 
-	function post($thread, $content) {
+	function post() {
         $auth = new secretResource();
         if ($auth->validateToken()) {
-    	    global $servername, $dbname, $username, $password, $port;
-            if (!isset($content) || empty($content)) { header('HTTP/1.1 400 Bad Request', TRUE, 400); exit; }
+            $thread = $_POST['replyTo'] ?? $_POST['thread'] ?? 0;
+            $thread = intval($thread ?? 0);
+    	    
+            global $servername, $dbname, $username, $password, $port;
+            if (!isset($_POST['content']) || empty($$_POST)) { header('HTTP/1.1 400 Bad Request', TRUE, 400); exit; }
 
         	$bumpCount = 0;
         	$thread = intval($thread ?? 0);
