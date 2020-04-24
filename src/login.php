@@ -20,7 +20,7 @@ class login_obj {
         if (isset($username) && isset($password)) {   
             if (true) { // if user and pass are filtered/sanitized
                 try {
-                    global $dbservername, $dbname, $dbusername, $dbpassword, $pdbort;
+                    global $dbservername, $dbname, $dbusername, $dbpassword, $dbport;
                     $db = new PDO("mysql:host={$dbservername};port={$dbport};dbname={$dbname}", $dbusername, $dbpassword);
                     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     $sql = "SELECT id, password FROM tenants WHERE username = ?";    

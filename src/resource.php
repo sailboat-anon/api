@@ -20,7 +20,7 @@ use PDO;
 
 class secretResource {
     function getToken(): string {
-        $token = substr($_SERVER['HTTP_AUTHORIZATION'], 7);  // regex was a bastard so i gave up; sscanf($_SERVER['HTTP_AUTHORIZATION'], 'Authorization: Bearer %s'); might work
+        @$token = substr($_SERVER['HTTP_AUTHORIZATION'], 7);  // regex was a bastard so i gave up; sscanf($_SERVER['HTTP_AUTHORIZATION'], 'Authorization: Bearer %s'); might work
         $token_segments = explode('.', $token);
         if (count($token_segments) != 3) {
             header('HTTP/1.1 401 Unauthorized', TRUE, 401);
