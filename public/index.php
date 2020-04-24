@@ -11,6 +11,7 @@ include __DIR__ . '/../src/treasure.php';
 
 use sailboats\route; // https://github.com/steampixel/simplePHPRouter
 use sailboats\whoami;
+use sailboats\sharedBoard; // https://github.com/sailboat-anon/sailboatland
 use sailboats\boards; // https://github.com/cyberland-digital/cyberland-protocol/blob/master/protocol.md
 use sailboats\frontend;
 use sailboats\login_obj; // https://github.com/firebase/php-jwt
@@ -45,15 +46,16 @@ route::add('/api/v1/whoami', function() {
 });
 
 route::add('/s', function() {
-  $sb->get();
+  $sb = new sharedBoard();
 });
 
-route::add('/s', function() {
+/*route::add('/s', function() {
   global $st;
   if ($st > 0) { header("HTTP/1.1 429 Too Many Requests", TRUE, 429);  exit; }
+  $obj = new sharedBoard();
   $obj->post();
 }, 'post');
-
+*/
 route::pathNotFound(function() {
   header('HTTP/1.1 404 Not Found', TRUE, 404);
 });
