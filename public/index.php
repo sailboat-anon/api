@@ -47,15 +47,16 @@ route::add('/api/v1/whoami', function() {
 
 route::add('/s', function() {
   $sb = new sharedBoard();
+  $sb->get();
 });
 
-/*route::add('/s', function() {
+route::add('/s', function() {
   global $st;
   if ($st > 0) { header("HTTP/1.1 429 Too Many Requests", TRUE, 429);  exit; }
   $obj = new sharedBoard();
   $obj->post();
 }, 'post');
-*/
+
 route::pathNotFound(function() {
   header('HTTP/1.1 404 Not Found', TRUE, 404);
 });
