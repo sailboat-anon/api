@@ -18,9 +18,9 @@ $port       = $db_config["port"];
 $BOARD_LIMIT = 1000;
 
 class sharedBoard {
-	function get() {
-        $auth = new secretResource();
-        if ($auth->validateToken()) {
+	function get() { // open to all for now
+        //$auth = new secretResource();
+        //if ($auth->validateToken()) {
             $sanitize = new sanitizeText();
        	    global $servername, $dbname, $username, $password, $port;
             global $BOARD_LIMIT;
@@ -46,8 +46,8 @@ class sharedBoard {
     	    	    ];
         	}
             echo(json_encode($a));
-        }
-        else { header('HTTP/1.1 401 Unauthorized', TRUE, 401); }
+        //}
+        //else { header('HTTP/1.1 401 Unauthorized', TRUE, 401); }
 	}
 
 	function post() {
