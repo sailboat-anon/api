@@ -53,7 +53,12 @@ class sharedBoard {
 	function post() {
         $auth = new secretResource();
         if ($auth->validateToken()) {
-            $thread = $_POST['replyTo'] ?? $_POST['thread'];
+            if (isset($_POST['replyTo'])) {
+                $thread = $_POST['replyTo'];
+            }
+            else {
+                $thread = $_POST['thread'];
+            } 
             $thread = intval($thread ?? 0);
     	    
             global $servername, $dbname, $username, $password, $port;
