@@ -21,6 +21,12 @@ class sharedBoard {
 	function get() { // open to all for now
         //$auth = new secretResource();
         //if ($auth->validateToken()) {
+        if (isset($_POST['replyTo'])) {
+            $thread = $_POST['replyTo']; 
+        }
+        else{
+            $thread = $_POST['thread'];
+        }
             $sanitize = new sanitizeText();
        	    global $servername, $dbname, $username, $password, $port;
             global $BOARD_LIMIT;
@@ -30,8 +36,8 @@ class sharedBoard {
     	    $conn = new PDO("mysql:host={$servername};port={$port};dbname={$dbname}", $username, $password);
             $sql = "SELECT id, content, replyTo, bumpCount, time FROM s WHERE replyTo=? OR id=? LIMIT ?";
             $s = $conn->prepare($sql);
-            $s->bindParam(1, intval($_GET["replyTo"] ?? 0),	PDO::PARAM_INT);
-            $s->bindParam(2, intval($_GET["replyTo"] ?? 0),	PDO::PARAM_INT);
+            @$s->bindParam(1, intval($thread ?? 0),	PDO::PARAM_INT);
+            @$s->bindParam(2, intval($thread ?? 0),	PDO::PARAM_INT);
             $s->bindParam(3, intval($limit ?? $BOARD_LIMIT),PDO::PARAM_INT);
             $s->execute();
             $r = $s->fetchAll();
