@@ -18,7 +18,7 @@ use sailboats\login_obj; // https://github.com/firebase/php-jwt
 use sailboats\treasure;
   
 $rl = new ratelimit();
-$st = $rl->getSleepTime($_SERVER["REMOTE_ADDR"]);
+$st = $rl->getSleepTime($_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER["REMOTE_ADDR"]);
 
 route::add('/', function() {
   $obj = new frontend();
