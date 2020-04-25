@@ -53,14 +53,13 @@ class sharedBoard {
 	function post() {
         $auth = new secretResource();
         if ($auth->validateToken()) {
-            $thread = $_POST['replyTo'] ?? $_POST['thread'] ?? 0;
+            $thread = $_POST['replyTo'] ?? $_POST['thread'];
             $thread = intval($thread ?? 0);
     	    
             global $servername, $dbname, $username, $password, $port;
             if (!isset($_POST['content']) || empty($_POST['content'])) { header('HTTP/1.1 400 Bad Request', TRUE, 400); exit; }
 
         	$bumpCount = 0;
-        	$thread = intval($thread ?? 0);
             // need to query the last index id to see if the 'replyTo' value is legit (don't want to reply to future posts)
     	    $conn = new PDO("mysql:host={$servername};port={$port};dbname={$dbname}", $username, $password);
     	    $sql = "INSERT INTO s (content, replyTo) VALUES (?,?)";
