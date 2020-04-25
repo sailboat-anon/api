@@ -21,12 +21,8 @@ class sharedBoard {
 	function get() { // open to all for now
         //$auth = new secretResource();
         //if ($auth->validateToken()) {
-        if (isset($_GET['replyTo'])) {
-            $thread = $_GET['replyTo']; 
-        }
-        else{
-            $thread = $_GET['thread'];
-        }
+        if (isset($_GET['replyTo'])) { $thread = $_GET['replyTo']; }
+        else { $thread = $_GET['thread']; }
             $sanitize = new sanitizeText();
        	    global $servername, $dbname, $username, $password, $port;
             global $BOARD_LIMIT;
@@ -34,11 +30,18 @@ class sharedBoard {
         	if (intval($limit > $BOARD_LIMIT)) { $limit = $BOARD_LIMIT; }
 
     	    $conn = new PDO("mysql:host={$servername};port={$port};dbname={$dbname}", $username, $password);
-            $sql = "SELECT id, content, replyTo, bumpCount, time FROM s WHERE replyTo=? OR id=? LIMIT ?";
-            $s = $conn->prepare($sql);
-            @$s->bindParam(1, intval($thread ?? 0),	PDO::PARAM_INT);
-            @$s->bindParam(2, intval($thread ?? 0),	PDO::PARAM_INT);
-            $s->bindParam(3, intval($limit ?? $BOARD_LIMIT),PDO::PARAM_INT);
+            if (is_numeric($thread)) {
+                $sql = "SELECT id, content, replyTo, bumpCount, time FROM s WHERE replyTo=? OR id=? LIMIT ?";
+                $s = $conn->prepare($sql);
+                $s->bindParam(1, $thread,	PDO::PARAM_INT);
+                $s->bindParam(2, $thread,	PDO::PARAM_INT);
+                $s->bindParam(3, intval($limit ?? $BOARD_LIMIT),PDO::PARAM_INT);
+            }
+            else {
+                $sql = "SELECT id, content, replyTo, bumpCount, time FROM s LIMIT ?";
+                $s = $conn->prepare($sql);
+                $s->bindParam(1, intval($limit ?? $BOARD_LIMIT),PDO::PARAM_INT);
+            }
             $s->execute();
             $r = $s->fetchAll();
             $a = [];
@@ -59,16 +62,12 @@ class sharedBoard {
 	function post() {
         $auth = new secretResource();
         if ($auth->validateToken()) {
-            if (isset($_POST['replyTo'])) {
-                $thread = $_POST['replyTo'];
-            }
-            else {
-                $thread = $_POST['thread'];
-            } 
-            $thread = intval($thread ?? 0);
+            if (!isset($_POST['content']) || empty($_POST['content'])) { header('HTTP/1.1 400 Bad Request', TRUE, 400); exit; }
+            if (isset($_GET['replyTo'])) { $thread = $_GET['replyTo']; }
+            else { $thread = $_GET['thread']; }
+            if (!is_numeric($thread)) { $thread = 0; }
     	    
             global $servername, $dbname, $username, $password, $port;
-            if (!isset($_POST['content']) || empty($_POST['content'])) { header('HTTP/1.1 400 Bad Request', TRUE, 400); exit; }
 
         	$bumpCount = 0;
             // need to query the last index id to see if the 'replyTo' value is legit (don't want to reply to future posts)
