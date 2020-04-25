@@ -57,7 +57,7 @@ class sharedBoard {
             $thread = intval($thread ?? 0);
     	    
             global $servername, $dbname, $username, $password, $port;
-            if (!isset($_POST['content']) || empty($_POST['content'])) { header('HTTP/1.1 400 Bad Request', TRUE, 999); exit; }
+            if (!isset($_POST['content']) || empty($_POST['content'])) { header('HTTP/1.1 400 Bad Request', TRUE, 400); exit; }
 
         	$bumpCount = 0;
         	$thread = intval($thread ?? 0);
@@ -66,8 +66,8 @@ class sharedBoard {
     	    $sql = "INSERT INTO s (content, replyTo) VALUES (?,?)";
 
     	    $s = $conn->prepare($sql);
-    	    $s->bindParam(1, $content,     PDO::PARAM_STR);
-    	    $s->bindParam(2, $thread,      PDO::PARAM_INT);
+    	    $s->bindParam(1, $_POST['content'],     PDO::PARAM_STR);
+    	    $s->bindParam(2, $thread,               PDO::PARAM_INT);
     	    $s->execute();
     	    $s->fetch();
 
