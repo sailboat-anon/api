@@ -41,7 +41,7 @@ class login_obj {
                             $tokenId    = base64_encode(openssl_random_pseudo_bytes(32));
                             $issuedAt   = time();
                             $notBefore  = $issuedAt + 0;  // seconds
-                            $expire     = $notBefore + 6000000; 
+                            $expire     = $notBefore + 1200; // 20 mins
                             $serverName = $_SERVER['SERVER_ADDR'];
                             
                             /*
