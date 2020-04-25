@@ -14,7 +14,8 @@
                                                                                                                                                          
  ```  
 
-this is the /api/ microservice for api.cyberland2.club!  in /dev/
+this is the /api/ microservice for api.cyberland2.club!
+PLEASE READ THE WIKI!!  https://github.com/sailboat-anon/api/wiki
 
 
 ```
