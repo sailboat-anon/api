@@ -40,7 +40,7 @@ class login_obj {
                         if ($rs['password'] == sha1($password)) { 
                             $tokenId    = base64_encode(openssl_random_pseudo_bytes(32));
                             $issuedAt   = time();
-                            $notBefore  = $issuedAt + 10;  // seconds
+                            $notBefore  = $issuedAt + 0;  // seconds
                             $expire     = $notBefore + 6000000; 
                             $serverName = $_SERVER['SERVER_ADDR'];
                             
