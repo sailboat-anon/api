@@ -21,11 +21,11 @@ class sharedBoard {
 	function get() { // open to all for now
         //$auth = new secretResource();
         //if ($auth->validateToken()) {
-        if (isset($_POST['replyTo'])) {
-            $thread = $_POST['replyTo']; 
+        if (isset($_GET['replyTo'])) {
+            $thread = $_GET['replyTo']; 
         }
         else{
-            $thread = $_POST['thread'];
+            $thread = $_GET['thread'];
         }
             $sanitize = new sanitizeText();
        	    global $servername, $dbname, $username, $password, $port;
