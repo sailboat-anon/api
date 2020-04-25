@@ -57,7 +57,7 @@ class sharedBoard {
             $thread = intval($thread ?? 0);
     	    
             global $servername, $dbname, $username, $password, $port;
-            if (!isset($_POST['content']) || empty($_POST['content'])) { header('HTTP/1.1 400 Bad Request', TRUE, 400); exit; }
+            if (!isset($_POST['content']) || empty($_POST['content'])) { header('HTTP/1.1 400 Bad Request', TRUE, 999); exit; }
 
         	$bumpCount = 0;
         	$thread = intval($thread ?? 0);
