@@ -63,8 +63,8 @@ class sharedBoard {
         $auth = new secretResource();
         if ($auth->validateToken()) {
             if (!isset($_POST['content']) || empty($_POST['content'])) { header('HTTP/1.1 400 Bad Request', TRUE, 400); exit; }
-            if (isset($_GET['replyTo'])) { $thread = $_GET['replyTo']; }
-            else { $thread = $_GET['thread']; }
+            if (isset($_POST['replyTo'])) { $thread = $_POST['replyTo']; }
+            else { $thread = $_POST['thread']; }
             if (!is_numeric($thread)) { $thread = 0; }
     	    
             global $servername, $dbname, $username, $password, $port;
