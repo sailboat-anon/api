@@ -16,9 +16,19 @@ use sailboats\boards; // https://github.com/cyberland-digital/cyberland-protocol
 use sailboats\frontend;
 use sailboats\login_obj; // https://github.com/firebase/php-jwt
 use sailboats\treasure;
-  
+
+function getRequestor(){       
+     if (array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)){
+            return  $_SERVER["HTTP_X_FORWARDED_FOR"];  
+     }else if (array_key_exists('REMOTE_ADDR', $_SERVER)) { 
+            return $_SERVER["REMOTE_ADDR"]; 
+     }else if (array_key_exists('HTTP_CLIENT_IP', $_SERVER)) {
+            return $_SERVER["HTTP_CLIENT_IP"]; 
+     } 
+}
+
 $rl = new ratelimit();
-$st = $rl->getSleepTime($_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER["REMOTE_ADDR"]);
+$st = $rl->getSleepTime(getRequestor());
 
 route::add('/', function() {
   $obj = new frontend();
