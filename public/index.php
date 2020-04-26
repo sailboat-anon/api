@@ -61,8 +61,8 @@ route::add('/s', function() {
 });
 
 route::add('/s', function() {
-  global $st;
-  if ($st > 0) { header("HTTP/1.1 429 Too Many Requests", TRUE, 429);  exit; }
+  //global $st;
+  //if ($st > 0) { header("HTTP/1.1 429 Too Many Requests", TRUE, 429);  exit; }
   $sb = new sharedBoard();
   $sb->post();
 }, 'post');
